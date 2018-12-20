@@ -80,13 +80,14 @@ public class MenuController {
         return "menu/add-item";
     }
 
-    @RequestMapping(value = "add-item/{menuId}", method = RequestMethod.POST)
+    @RequestMapping(value = "add-item", method = RequestMethod.POST)
     public String addItem(Model model, @ModelAttribute @Valid AddMenuItemForm itemForm,
-                          Errors errors, @PathVariable int menuId) {
+                          Errors errors) {
 
         if (errors.hasErrors()) {
             model.addAttribute("title", "Add Item");
-            return "menu/add-item/" + menuId;
+            model.addAttribute("form", itemForm);
+            return "menu/add-item";
         }
 
         Menu menu = menuDao.findOne(itemForm.getMenuId());
